@@ -9,17 +9,17 @@ namespace Terrence.Services
     [TerrenceService("google")]
     class GoogleSearchByImage : ITerrenceService
     {
-        private const string requestUrl = "http://www.google.com/searchbyimage/upload";
-        private const string userAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:32.0) Gecko/20100101 Firefox/32.0";
-        private readonly Encoding encoding = Encoding.UTF8;
-        private readonly string contentType;
-        private readonly string boundary;
+        private const string RequestUrl = "http://www.google.com/searchbyimage/upload";
+        private const string UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:32.0) Gecko/20100101 Firefox/32.0";
+        private readonly Encoding _encoding = Encoding.UTF8;
+        private readonly string _contentType;
+        private readonly string _boundary;
 
         public GoogleSearchByImage()
         {
             var guid = Guid.NewGuid().ToString();
-            boundary = new string('-', 40 - guid.Length) + guid;
-            contentType = "multipart/form-data; boundary=" + boundary.Substring(2);
+            _boundary = new string('-', 40 - guid.Length) + guid;
+            _contentType = "multipart/form-data; boundary=" + _boundary.Substring(2);
         }
 
         public void Run(string[] args)
@@ -27,20 +27,20 @@ namespace Terrence.Services
             var imageFilePath = args[0];
             var imageBytes = File.ReadAllBytes(imageFilePath);
 
-            var request = (HttpWebRequest)WebRequest.Create(requestUrl);
+            var request = (HttpWebRequest)WebRequest.Create(RequestUrl);
             request.Method = "POST";
-            request.ContentType = contentType;
-            request.UserAgent = userAgent;
+            request.ContentType = _contentType;
+            request.UserAgent = UserAgent;
 
             using (var requestData = new MemoryStream())
             {
                 // File
-                var content = boundary + "\r\nContent-Disposition: form-data; name=\"encoded_image\"; filename=\"texture.png\"\r\nContent-Type: image/png\r\n\r\n";
-                requestData.Write(encoding.GetBytes(content), 0, encoding.GetByteCount(content));
+                var content = _boundary + "\r\nContent-Disposition: form-data; name=\"encoded_image\"; filename=\"texture.png\"\r\nContent-Type: image/png\r\n\r\n";
+                requestData.Write(_encoding.GetBytes(content), 0, _encoding.GetByteCount(content));
                 requestData.Write(imageBytes, 0, imageBytes.Length);
                 // Footer
-                content = "\r\n" + boundary + "--\r\n";
-                requestData.Write(encoding.GetBytes(content), 0, encoding.GetByteCount(content));
+                content = "\r\n" + _boundary + "--\r\n";
+                requestData.Write(_encoding.GetBytes(content), 0, _encoding.GetByteCount(content));
 
                 var buffer = new byte[requestData.Length];
                 requestData.Position = 0;
