@@ -52,7 +52,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="nsis\Terrence.nsi">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
