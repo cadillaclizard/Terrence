@@ -66,6 +66,7 @@ Section "Terrence"
   ; Registry shell ex
   WriteRegStr HKCR "pngfile\shell\Search by image\command" "" "$\"$INSTDIR\Terrence.exe$\" -google %1"
   WriteRegStr HKCR "jpgfile\shell\Search by image\command" "" "$\"$INSTDIR\Terrence.exe$\" -google %1"
+  WriteRegStr HKCR "jpegfile\shell\Search by image\command" "" "$\"$INSTDIR\Terrence.exe$\" -google %1"
   WriteRegStr HKCR "giffile\shell\Search by image\command" "" "$\"$INSTDIR\Terrence.exe$\" -google %1"
 
 SectionEnd
@@ -76,6 +77,7 @@ Section "Uninstall"
 
   ; Delete files
   Delete "$INSTDIR\Terrence.exe"
+  Delete "$INSTDIR\Uninstall.exe"
 
   ; Delete directories
   RMDir "$INSTDIR"
@@ -83,5 +85,10 @@ Section "Uninstall"
   ; Remove registry keys
   DeleteRegKey HKCU "Software\Terrence"
   DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\Terrence"
+
+  DeleteRegKey HKCR "pngfile\shell\Search by image\"
+  DeleteRegKey HKCR "jpgfile\shell\Search by image\"
+  DeleteRegKey HKCR "jpegfile\shell\Search by image\"
+  DeleteRegKey HKCR "giffile\shell\Search by image\"
 
 SectionEnd
