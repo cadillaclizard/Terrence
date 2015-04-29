@@ -69,6 +69,12 @@ Section "Terrence"
   WriteRegStr HKCR "jpegfile\shell\Search by image\command" "" "$\"$INSTDIR\Terrence.exe$\" -google %1"
   WriteRegStr HKCR "giffile\shell\Search by image\command" "" "$\"$INSTDIR\Terrence.exe$\" -google %1"
 
+  ; Registry shell ex icons
+  WriteRegStr HKCR "pngfile\shell\Search by image" "Icon" "$INSTDIR\Terrence.exe"
+  WriteRegStr HKCR "jpgfile\shell\Search by image" "Icon" "$INSTDIR\Terrence.exe"
+  WriteRegStr HKCR "jpegfile\shell\Search by image" "Icon" "$INSTDIR\Terrence.exe"
+  WriteRegStr HKCR "giffile\shell\Search by image" "Icon" "$INSTDIR\Terrence.exe"
+
 SectionEnd
 
 ;--------------------------------
